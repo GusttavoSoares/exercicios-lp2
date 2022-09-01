@@ -1,9 +1,3 @@
-<%@ page import="java.util.Locale" %><%--
-Escreva uma página JSP que defina os seguintes métodos:
-um método que recebe uma String e retorna um número inteiro com a quantidade de vogais da String;
-um método que recebe uma String e retorna um número inteiro com a quantidade de consoantes da String;
-Invoque os respectivos métodos e imprima os resultados na página JSP.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -11,35 +5,42 @@ Invoque os respectivos métodos e imprima os resultados na página JSP.
 </head>
 <body>
 <%!
-public int vogal(String palavra){
-    palavra = palavra.toLowerCase();
-    int count = 0;
+    public int vogal(String palavra){
+        palavra = palavra.toLowerCase();
 
-    for (int i = 0; i < palavra.length() ; i++) {
-        if (palavra.charAt(i) == 'a' ||
-                palavra.charAt(i) == 'e' ||
-                palavra.charAt(i) == 'i' ||
-                palavra.charAt(i) == 'o' ||
-                palavra.charAt(i) == 'u')
-            count++;
+        int count = 0;
+        for (int i = 0; i < palavra.length() ; i++) {
+            if (palavra.charAt(i) == 'a' ||
+                    palavra.charAt(i) == 'e' ||
+                    palavra.charAt(i) == 'i' ||
+                    palavra.charAt(i) == 'o' ||
+                    palavra.charAt(i) == 'u')
+                count++;
+        }
+        return count;
     }
-    return count;
-}
 
-public int consoante(String palavra){
-    palavra = palavra.toLowerCase();
-    int count = 0;
+    public int consoante(String palavra){
+        palavra = palavra.toLowerCase();
+        String regex2 = "[^a-záàâãéèêíïóôõöúçñ]+";
+        String regex = "\\d+";
 
-    for (int i = 0; i < palavra.length() ; i++) {
-        if (palavra.charAt(i) == 'a' ||
-                palavra.charAt(i) == 'e' ||
-                palavra.charAt(i) == 'i' ||
-                palavra.charAt(i) == 'o' ||
-                palavra.charAt(i) == 'u')
-            count++;
+        palavra = palavra.replaceAll(regex, " "); // tira os números
+        palavra = palavra.replaceAll(regex2, " "); // tira os caracteres especiais
+        int count = 0;
+
+        for (int i = 0; i < palavra.length() ; i++) {
+            if (
+                    palavra.charAt(i) == ' ' ||
+                    palavra.charAt(i) == 'a' ||
+                    palavra.charAt(i) == 'e' ||
+                    palavra.charAt(i) == 'i' ||
+                    palavra.charAt(i) == 'o' ||
+                    palavra.charAt(i) == 'u')
+                count++;
+        }
+        return palavra.length() - count;
     }
-    return palavra.length() - count;
-}
 %>
 
 <p> Quantidade de vogal: <%= vogal("Gustavo")%></p>
